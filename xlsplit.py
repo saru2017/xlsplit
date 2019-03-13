@@ -11,7 +11,7 @@ if len(sys.argv) != 2:
 filename = sys.argv[1]
 
 wb = openpyxl.load_workbook(filename)
-sheets_names = wb.get_sheet_names()
+sheets_names = wb.sheetnames
 wb.close()
 
 for i in range(len(sheets_names)):
@@ -21,9 +21,10 @@ for i in range(len(sheets_names)):
         if i == j:
             continue
 
-        wb.remove_sheet(wb.get_sheet_by_name(sheets_names[j]))
+        wb.remove(wb[sheets_names[j]])
         
     str = os.path.splitext(filename)[0] + "_" + remain_name + ".xlsx"
+    wb.active = 1
     wb.save(str)
     wb.close()
 
